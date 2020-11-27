@@ -1,4 +1,4 @@
-class ComicsController < ApplicationController
+class Api::V1::ComicsController < ApplicationController
   before_action :set_comic, only: [:show, :update, :destroy]
 
   # GET /comics
