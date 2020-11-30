@@ -1,4 +1,5 @@
 class Api::V1::PublishersController < ApplicationController
+  before_action :authorize_access_request!, except: [:show, :index]
   before_action :set_publisher, only: [:show, :update, :destroy]
 
   # GET /publishers
@@ -46,6 +47,6 @@ class Api::V1::PublishersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def publisher_params
-      params.require(:publisher).permit(:name, :user_id)
+      params.require(:publisher).permit(:name)
     end
 end

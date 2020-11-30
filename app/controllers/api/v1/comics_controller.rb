@@ -1,9 +1,10 @@
 class Api::V1::ComicsController < ApplicationController
+  before_action :authorize_access_request!
   before_action :set_comic, only: [:show, :update, :destroy]
 
   # GET /comics
   def index
-    @comics = Comic.all
+    @comics = current_user.comics.all
 
     render json: @comics
   end
@@ -15,7 +16,7 @@ class Api::V1::ComicsController < ApplicationController
 
   # POST /comics
   def create
-    @comic = Comic.new(comic_params)
+    @comic = current_user.comics.build(comic_params)
 
     if @comic.save
       render json: @comic, status: :created, location: @comic
@@ -41,11 +42,11 @@ class Api::V1::ComicsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comic
-      @comic = Comic.find(params[:id])
+      @comic = current_user.comics.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def comic_params
-      params.require(:comic).permit(:title, :year, :publisher_id, :user, :references)
+      params.require(:comic).permit(:title, :year, :publisher_id)
     end
 end
