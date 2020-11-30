@@ -7,9 +7,11 @@ Rails.application.routes.draw do
     end
   end
 
-  post "refresh", controller: :refresh, action: :create
-  post "signin",  controller: :signin, action: :create
-  post "signup", controller: :signup, action: :create
-  delete "signin", controller: :signin, action: :destroyx
+  root 'home#index'
+
+  post "refresh", to: 'refresh#create'
+  post "signin",  to: 'signin#create'
+  post "signup", to: 'signup#create'
+  delete "signin", to: 'signin#destroy'
 
 end
